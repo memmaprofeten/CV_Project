@@ -1,44 +1,19 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-
+import crowdAIparser as ca
 ##Simple implementation of template matching
 ##Just change templatenumber to find different templates
 ##And same for image
-def getCar(number,csv):
-    carImage = cv2.imread('./object-detection-crowdai/'+csv[number][4])
-    x = csv[number][0]
-    y = csv[number][1]
-    h = csv[number][3]-y
-    w = csv[number][2]-x
-    carImage = carImage[y:y+h,x:x+w]
-    return carImage
-def getObject(number,csv):
-    objectImage = cv2.imread('./object-detection-crowdai/'+csv[number][4])
-    objectType = csv[number][5]
-    x = csv[number][0]
-    y = csv[number][1]
-    h = csv[number][3]-y
-    w = csv[number][2]-x
-    objectImage = objectImage[y:y+h,x:x+w]
-    return (objectImage,objectType)
-
-def getImage(number,csv):
-    image = cv2.imread('./object-detection-crowdai/'+csv[number][4])
-    return image
-    
-def loadUdacityFile(filename):
-    csv = np.recfromcsv(filename)
-    return csv
 #plt.imshow(image)
 #plt.show()
 
 imageNumber = 0
 templateNumber = 100 
 
-csv = loadUdacityFile("./object-detection-crowdai/labels.csv")
-image = getImage(imageNumber,csv)
-template,_ = getObject(templateNumber,csv)
+csv = ca.loadFile()
+image = ca.getImage(imageNumber,csv)
+template,_ = ca.getObject(templateNumber,csv)
 image = cv2.resize(image, (0,0), fx=0.5, fy=0.5) 
 template = cv2.resize(template, (0,0), fx=0.5, fy=0.5) 
  
