@@ -28,3 +28,5 @@ def loadFile():
     csv = np.recfromcsv('./object-detection-crowdai/labels.csv')
     return csv
 
+def getLabel(number,csv):
+    return csv[number][5]
