@@ -29,6 +29,8 @@ print "Stored"
 test_labels = labels[training_length:]
 test_histograms = histograms[training_length:]
 true = 0.0
+guesstrue = 0.0
+guessfalse = 0.0
 false = 0.0
 pred = clf.predict(test_histograms)
 for i in range(test_length):
@@ -36,9 +38,16 @@ for i in range(test_length):
         true += 1.0
     else:
         false += 1.0
+    if 0 == test_labels[i]:
+        guesstrue += 1.0
+    else:
+        guessfalse += 1.0
 
 
 
 print "False", false
 print "True", true
 print "Ratio", true / (true + false)
+print "Guessed False", guessfalse
+print "Guessed True", guesstrue
+print "Guessed Ratio", guesstrue / (guesstrue + guessfalse)
