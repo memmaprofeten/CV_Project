@@ -1,2 +1,2 @@
 object-detection-crowdai/*.jpg
-.pickle
+*.pickle
