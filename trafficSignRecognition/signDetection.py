@@ -53,6 +53,9 @@ nb_classes = 43
 print("Getting images and labels")
 images, labels = readTrafficSigns('GTSRB-2/Final_Training/Images')
 
+for label in labels:
+    label = 0
+
 print("Getting training images for no sign")
 fullimages = open('./TrainIJCNN2013/gt.csv')
 gtReader = csv.reader(fullimages, delimiter=';')
@@ -62,11 +65,12 @@ for row in gtReader:
     background = cv2.imread('./TrainIJCNN2013/'+row[0])
     shape = background.shape
     size = 30
-    y = random.randint(0,shape[1]-size)
-    x = random.randint(0,shape[0]-size)
+    padding = size + 10
+    y = random.randint(0,shape[1]-padding)
+    x = random.randint(0,shape[0]-padding)
     background = background[y:y+size,x:x+size]
     images.append(background)
-    labels.append(43)
+    labels.append(1)
     i += 1
 
 print("Create HOGs for images")
@@ -75,9 +79,6 @@ for i in range(length):
     images[i] = hs.hog(images[i])
     progress(i,length)
 
-#image = plt.imread('GTSRB-2/Final_Training/Images/00000/00000_00001.ppm')
-#hog = hs.hog(image)
-    
 
 with open('hist.pickle','wb') as hist:
     pickle.dump(images,hist,pickle.HIGHEST_PROTOCOL)
@@ -94,7 +95,7 @@ with open('label.pickle','rb') as label:
 
 print("Loaded")
 
-clf = svm.SVC(decision_function_shape='ovo')
+clf = svm.SVC()
 print("Fitting")
 clf.fit(histograms,labels)
 print('done fitting')
@@ -121,12 +122,11 @@ for filename in test_images_paths:
         pass
                                           
 X_test = np.array(test_images, dtype='float32')
-# Make one hot targets
 Y_test = np.eye(nb_classes, dtype='uint8')[test_labels] 
 print("Creating Hog for test")
 testHogs = np.empty((len(X_test),27))
-#for i in range(len(X_test)):
-#    testHogs[i] = hs.hog(X_test[i])
+for i in range(len(X_test)):
+    testHogs[i] = hs.hog(X_test[i])
 
 
 print("Storing test hog...")

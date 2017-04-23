@@ -55,19 +55,3 @@ with open('hoisvm.pickle','wd') as hoisvm:
    histograms = pickle.dump(clf,hoisvm,pickle.HIGHEST_PROTOCOL)
 
 print "Stored"
-test_labels = labels[training_length:]
-test_histograms = histograms[training_length:]
-true = 0
-false = 0
-pred = clf.predict(test_histograms)
-for i in range(test_length):
-    if pred[i] == test_labels[i]:
-        true += 1
-    else:
-        false += 1
-
-
-
-print "False", false
-print "True", true
-print "Ratio", true / (true + false)

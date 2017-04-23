@@ -47,8 +47,6 @@ histograms,labels = getTrainingVectors(csv)
 
 histograms = histograms.reshape((len(csv),97))
 
-print histograms.shape
-print labels.shape
 print "Storing data..."
 with open('hist.pickle','wb') as hist:
     pickle.dump(histograms,hist,pickle.HIGHEST_PROTOCOL)

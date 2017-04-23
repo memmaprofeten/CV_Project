@@ -11,7 +11,6 @@ csv = ca.loadFile()
 length = len(csv)
 test_length = 1000
 training_length = length-test_length
-#histograms,labels = getTrainingVectors(csv)
 
 print "Loading data..."
 with open('hist.pickle','rd') as hist:
