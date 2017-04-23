@@ -38,10 +38,6 @@ def hog(image):
                 section = int(math.floor(angle[k,j,i]/20))
                 amount = (angle[k,j,i] % 20)/20.0
                 histograms[section,i] += mag[k,j,i] * (1.0-amount)
-                print "Amount", 1.0-amount
-                print "Magnitude", mag[k,j,i]
-                print "Section", section
-                print "Col", histograms[section,i]
                 if amount < 0.5:
                     section -= 1
                 else:
@@ -50,5 +46,6 @@ def hog(image):
                         section = 0
                 if amount != 0:
                     histograms[section,i] += mag[k,j,i] * (amount)
-   # histograms = histograms.flatten()
+    histograms = histograms.flatten()
+    histograms = histograms / np.amax(histograms) 
     return histograms
