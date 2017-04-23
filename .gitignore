@@ -1,2 +1,3 @@
 object-detection-crowdai/*.jpg
 *.pickle
+*.pyc
