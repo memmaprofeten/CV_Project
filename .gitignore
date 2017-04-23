@@ -1,3 +1,4 @@
 object-detection-crowdai/*.jpg
 *.pickle
 *.pyc
+*.ppm
